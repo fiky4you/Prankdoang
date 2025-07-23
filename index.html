@@ -85,25 +85,6 @@
       padding: 0 10px;
     }
 
-    /* Style for the close button */
-    #closeButton {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.3);
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-      z-index: 10;
-    }
-
-    #closeButton:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-
     #warningMessage {
       display: none;
       position: fixed;
@@ -138,9 +119,6 @@
       }
       #marquee {
         font-size: 14px;
-      }
-      #closeButton {
-        font-size: 16px;
       }
     }
   </style>
@@ -184,11 +162,6 @@ window.onload = function () {
   marquee.id = "marquee";
   marquee.innerText = "Ini hanya pengingat dari Dhoce.id. Amankan situs Anda sebelum orang lain melakukannya.";
 
-  // Create close button
-  const closeButton = document.createElement("button");
-  closeButton.id = "closeButton";
-  closeButton.textContent = "Close";
-  
   // Create warning message
   const warningMessage = document.createElement("div");
   warningMessage.id = "warningMessage";
@@ -210,7 +183,6 @@ window.onload = function () {
   container.appendChild(title);
   container.appendChild(subtitle);
   container.appendChild(marquee);
-  container.appendChild(closeButton);
   document.body.appendChild(container);
   document.body.appendChild(warningMessage);
 
@@ -253,15 +225,6 @@ window.onload = function () {
   window.onpopstate = function() {
     if (!allowExit) {
       history.pushState(null, null, document.URL);
-      alarmAudio.play();
-      warningMessage.style.display = "block";
-      startCountdown();
-    }
-  };
-
-  // Handle close button click
-  closeButton.onclick = function() {
-    if (!allowExit) {
       alarmAudio.play();
       warningMessage.style.display = "block";
       startCountdown();
