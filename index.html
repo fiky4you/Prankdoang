@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DATA LU GW AMBIL - Dhoce.id Reminder</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes marqueeMove {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    #videoBg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    #mainContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #logo {
+      max-width: 150px;
+      width: 40%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    #title {
+      font-family: 'Merriweather', serif;
+      font-size: 32px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    #subtitle {
+      font-size: 18px;
+      color: red;
+      font-family: Impact, Charcoal, sans-serif;
+      font-weight: 900;
+      white-space: pre-line;
+      max-width: 90%;
+      animation: fadeInOut 4s ease-in-out infinite;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #marquee {
+      position: absolute;
+      bottom: 20px;
+      left: -100%;
+      white-space: nowrap;
+      color: white;
+      font-size: 12px;
+      animation: marqueeMove 10s linear infinite;
+      width: max-content;
+      padding: 0 10px;
+    }
+
+    /* Style for the close button */
+    #closeButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      z-index: 10;
+    }
+
+    #closeButton:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    #warningMessage {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.9);
+      color: red;
+      padding: 20px;
+      border: 2px solid red;
+      border-radius: 10px;
+      z-index: 100;
+      text-align: center;
+      max-width: 80%;
+    }
+
+    #countdown {
+      font-size: 24px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    @media (min-width: 768px) {
+      #logo {
+        max-width: 200px;
+      }
+      #title {
+        font-size: 36px;
+      }
+      #subtitle {
+        font-size: 20px;
+      }
+      #marquee {
+        font-size: 14px;
+      }
+      #closeButton {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<script>
+window.onload = function () {
+  // Create and append video background
+  const videoBg = document.createElement("video");
+  videoBg.id = "videoBg";
+  videoBg.src = "https://files.catbox.moe/6idt3a.mp4";
+  videoBg.autoplay = true;
+  videoBg.loop = true;
+  videoBg.muted = true;
+  videoBg.playsInline = true;
+  document.body.appendChild(videoBg);
+
+  // Create main container
+  const container = document.createElement("div");
+  container.id = "mainContainer";
+
+  // Create logo
+  const logo = document.createElement("img");
+  logo.id = "logo";
+  logo.src = "https://files.catbox.moe/5kx3hs.png";
+  logo.alt = "Logo";
+
+  // Create title
+  const title = document.createElement("h1");
+  title.id = "title";
+  title.textContent = "DATA LU GW AMBIL";
+
+  // Create subtitle
+  const subtitle = document.createElement("p");
+  subtitle.id = "subtitle";
+  subtitle.innerText = "Kami adalah grup Dhoce.id,\nhanya untuk mengingatkan Anda agar meningkatkan keamanan.";
+  
+  // Create marquee
+  const marquee = document.createElement("div");
+  marquee.id = "marquee";
+  marquee.innerText = "Ini hanya pengingat dari Dhoce.id. Amankan situs Anda sebelum orang lain melakukannya.";
+
+  // Create close button
+  const closeButton = document.createElement("button");
+  closeButton.id = "closeButton";
+  closeButton.textContent = "Close";
+  
+  // Create warning message
+  const warningMessage = document.createElement("div");
+  warningMessage.id = "warningMessage";
+  warningMessage.innerHTML = `
+    <h2>PERINGATAN!</h2>
+    <p>Anda tidak diizinkan meninggalkan halaman ini!</p>
+    <div id="countdown">Tunggu 60 detik...</div>
+  `;
+  
+  // Create alarm audio
+  const alarmAudio = document.createElement("audio");
+  alarmAudio.id = "alarmAudio";
+  alarmAudio.src = "https://s33.aconvert.com/convert/p3r68-cdx67/kynmx-b5lir.mp3";
+  alarmAudio.loop = true;
+  document.body.appendChild(alarmAudio);
+
+  // Append all elements
+  container.appendChild(logo);
+  container.appendChild(title);
+  container.appendChild(subtitle);
+  container.appendChild(marquee);
+  container.appendChild(closeButton);
+  document.body.appendChild(container);
+  document.body.appendChild(warningMessage);
+
+  let allowExit = false;
+  let countdownInterval;
+
+  function startCountdown() {
+    let seconds = 60;
+    const countdownElement = document.getElementById("countdown");
+    
+    countdownInterval = setInterval(() => {
+      seconds--;
+      countdownElement.textContent = `Tunggu ${seconds} detik...`;
+      
+      if (seconds <= 0) {
+        clearInterval(countdownInterval);
+        allowExit = true;
+        countdownElement.textContent = "Anda sekarang dapat meninggalkan halaman ini";
+        setTimeout(() => {
+          warningMessage.style.display = "none";
+        }, 2000);
+      }
+    }, 1000);
+  }
+
+  // Prevent closing the page
+  window.onbeforeunload = function(e) {
+    if (!allowExit) {
+      e.preventDefault();
+      e.returnValue = '';
+      alarmAudio.play();
+      warningMessage.style.display = "block";
+      startCountdown();
+      return '';
+    }
+  };
+
+  // Prevent back button
+  history.pushState(null, null, document.URL);
+  window.onpopstate = function() {
+    if (!allowExit) {
+      history.pushState(null, null, document.URL);
+      alarmAudio.play();
+      warningMessage.style.display = "block";
+      startCountdown();
+    }
+  };
+
+  // Handle close button click
+  closeButton.onclick = function() {
+    if (!allowExit) {
+      alarmAudio.play();
+      warningMessage.style.display = "block";
+      startCountdown();
+    }
+  };
+
+  // Prevent keyboard shortcuts (F12, Ctrl+W, etc.)
+  document.addEventListener('keydown', function(e) {
+    if (!allowExit && (e.key === 'F12' || 
+        (e.ctrlKey && e.key === 'w') || 
+        (e.ctrlKey && e.key === 'W') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+        (e.ctrlKey && e.shiftKey && e.key === 'C'))) {
+      e.preventDefault();
+      alarmAudio.play();
+      warningMessage.style.display = "block";
+      startCountdown();
+    }
+  });
+
+  // Handle touch gestures for mobile (swipe back/forward)
+  let touchStartX = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+
+  document.addEventListener('touchend', function(e) {
+    const touchEndX = e.changedTouches[0].screenX;
+    const diffX = touchStartX - touchEndX;
+    
+    // Detect swipe right (back gesture)
+    if (diffX > 50 && !allowExit) {
+      e.preventDefault();
+      alarmAudio.play();
+      warningMessage.style.display = "block";
+      startCountdown();
+    }
+  }, false);
+};
+</script>
+
+</body>
+</html>
